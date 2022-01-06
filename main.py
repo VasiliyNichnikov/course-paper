@@ -16,39 +16,21 @@ class Main:
                     self.__reading_next_character()  # процедура считывания очередного символа текста в переменную self.__code_program
 
                 if self.__is_string_letter():
-                    self.__clear_buffer() # Очистка буфера
-                    self.__add_selected_symbol_to_buffer() # Добавить выбранный символ в конец буфера
-                    self.__reading_next_character()
-                    self.__state = States.I
+                    self.__change_state_part_one(States.I)
                 elif self.__selected_symbol in ['0', '1']:
-                    self.__clear_buffer()
-                    self.__state = States.N2
-                    self.__add_selected_symbol_to_buffer()
-                    self.__reading_next_character()
+                    self.__digit_handler(States.N2)
                 elif self.__selected_symbol in ['2', '3', '4', '5', '6', '7']:
-                    self.__clear_buffer()
-                    self.__selected_symbol = States.N8
-                    self.__add_selected_symbol_to_buffer()
-                    self.__reading_next_character()
+                    self.__digit_handler(States.N8)
                 elif self.__selected_symbol in ['8', '9']:
-                    self.__clear_buffer()
-                    self.__selected_symbol = States.N10
-                    self.__add_selected_symbol_to_buffer()
-                    self.__reading_next_character()
+                    self.__digit_handler(States.N10)
                 elif self.__selected_symbol == '.':
-                    self.__clear_buffer()
-                    self.__add_selected_symbol_to_buffer()
-                    self.__reading_next_character()
-                    self.__state = States.P1
+                    self.__change_state_part_one(States.P1)
                 elif self.__selected_symbol == '/':
-                    self.__reading_next_character()
-                    self.__state = States.C1
+                    self.__change_state_part_two(States.C1)
                 elif self.__selected_symbol == '<':
-                    self.__reading_next_character()
-                    self.__state = States.M1
+                    self.__change_state_part_two(States.M1)
                 elif self.__selected_symbol == '>':
-                    self.__reading_next_character()
-                    self.__state = States.M2
+                    self.__change_state_part_two(States.M2)
                 elif self.__selected_symbol == '}':
                     # out(n, k) - процедура записи пары чисел (n, k) в файл лексем
                     self.__state = States.V
@@ -57,7 +39,7 @@ class Main:
 
             case States.I:
                 while self.__is_string_letter() or self.__is_string_number():
-                    # Добавляем очередной символ в конец буфера S
+                    self.__add_selected_symbol_to_buffer()
                     self.__reading_next_character()
                 # look(t) Вызов функции, которая ищет лексему из буфера S в таблице t с возвращением номера лексемы в таблице
 
@@ -126,6 +108,22 @@ class Main:
 
             case States.OG:
                 pass
+
+    def __digit_handler(self, new_state: States) -> None:
+        self.__clear_buffer()
+        self.__state = new_state
+        self.__add_selected_symbol_to_buffer()
+        self.__reading_next_character()
+
+    def __change_state_part_one(self, new_state: States) -> None:
+        self.__clear_buffer()  # Очистка буфера
+        self.__add_selected_symbol_to_buffer()  # Добавить выбранный символ в конец буфера
+        self.__reading_next_character()  # Чтение следующего символа
+        self.__state = new_state
+
+    def __change_state_part_two(self, new_state: States) -> None:
+        self.__reading_next_character()
+        self.__state = new_state
 
     def __reading_next_character(self) -> None:
         self.__code_program = self.__code_program[1:]
