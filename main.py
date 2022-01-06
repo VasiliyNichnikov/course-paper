@@ -37,15 +37,47 @@ class Main:
                 else:
                     self.__state = States.OG
 
-            case States.I:
+            case States.I:  # Доделать
                 while self.__is_string_letter() or self.__is_string_number():
                     self.__add_selected_symbol_to_buffer()
                     self.__reading_next_character()
                 # look(t) Вызов функции, которая ищет лексему из буфера S в таблице t с возвращением номера лексемы в таблице
 
             case States.N2:
-                pass
-
+                while self.__selected_symbol == '0' or self.__selected_symbol == '1':
+                    self.__add_selected_symbol_to_buffer()
+                    self.__reading_next_character()
+                if self.__selected_symbol in ['2', '3', '4', '5', '6', '7']:
+                    self.__state = States.N8
+                elif self.__selected_symbol in ['8', '9']:
+                    self.__state = States.N10
+                elif self.__selected_symbol in ['A', 'a', 'C', 'c', 'F', 'f']:
+                    self.__state = States.N16
+                elif self.__selected_symbol in ['E', 'e']:
+                    self.__add_selected_symbol_to_buffer()
+                    self.__reading_next_character()
+                    self.__state = States.E11
+                elif self.__selected_symbol in ['D', 'd']:
+                    self.__add_selected_symbol_to_buffer()
+                    self.__reading_next_character()
+                    self.__state = States.D
+                elif self.__selected_symbol in ['O', 'o']:
+                    self.__state = States.O
+                elif self.__selected_symbol in ['H', 'h']:
+                    self.__reading_next_character()
+                    self.__state = States.HX
+                elif self.__selected_symbol == '.':
+                    self.__add_selected_symbol_to_buffer()
+                    self.__reading_next_character()
+                    self.__state = States.P1
+                elif self.__selected_symbol in ['B', 'b']:
+                    self.__add_selected_symbol_to_buffer()
+                    self.__reading_next_character()
+                    self.__state = States.B
+                elif self.__is_string_letter():
+                    self.__state = States.ER
+                else:
+                    self.__state = States.N10
             case States.N8:
                 pass
 
