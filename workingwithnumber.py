@@ -53,6 +53,3 @@ class WorkingWithNumber:
             case 'F':
                 return 15
         return int(symbol)
-
-# c = WorkingWithNumber()
-# print(c.conversion_from_number_system_to_decimal("3BC9", 16))
