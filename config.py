@@ -24,3 +24,5 @@ LIST_LIMITERS = {
     23: "/*",
     24: "*/"
 }
+
+name_token_file = "statics/token_file.txt"
