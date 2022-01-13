@@ -4,7 +4,6 @@ from buffer import Buffer
 from characterreader import CharacterReader
 from conditions.condition import Condition
 from conditions.conditionparent import ConditionParent
-from conditions.typescondition import TypesCondition
 from tokens.workingwithtoken import WorkingWithToken
 from transitions.transitionparent import TransitionParent
 
@@ -15,12 +14,7 @@ class ConditionH(ConditionParent):
 
     def action(self, transitions: List[TransitionParent]) -> None:
         self.__cleaning_from_code()
-
-        for transition in transitions:
-            condition: TypesCondition | bool = transition.action()
-            if isinstance(condition, TypesCondition):
-                self._condition.now = condition
-                break
+        super(ConditionH, self).action(transitions)
 
     def __cleaning_from_code(self) -> None:
         while self._reader.selected_symbol in [' ', '\n']:
