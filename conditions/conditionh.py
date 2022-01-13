@@ -1,16 +1,17 @@
 from typing import List
 
+from buffer import Buffer
 from characterreader import CharacterReader
-from states.condition import Condition
-from states.conditionparent import ConditionParent
-from states.typescondition import TypesCondition
+from conditions.condition import Condition
+from conditions.conditionparent import ConditionParent
+from conditions.typescondition import TypesCondition
+from tokens.workingwithtoken import WorkingWithToken
 from transitions.transitionparent import TransitionParent
 
 
 class ConditionH(ConditionParent):
-
-    def __init__(self, reader: CharacterReader, condition: Condition):
-        super().__init__(reader, condition)
+    def __init__(self, reader: CharacterReader, buffer: Buffer, token: WorkingWithToken, condition: Condition):
+        super().__init__(reader, buffer, token, condition)
 
     def action(self, transitions: List[TransitionParent]) -> None:
         self.__cleaning_from_code()

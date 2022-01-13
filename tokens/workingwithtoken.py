@@ -18,19 +18,26 @@ class WorkingWithToken:
     def __init__(self, buffer: Buffer, tables: TablesOfTokens):
         self.__buffer = buffer
         self.__tables = tables
+        self.__z = 0
+
+    @property
+    def z(self) -> int:
+        return self.__z
 
     def find_token_in_selected_table(self, t: TypesOfTokenTables) -> int:
         """
         Ищет лексему из буфера в выбранной таблице :param t: с возвращением номера лексемы в таблице
         :param t: Выбранная таблица
-        :return: Возвращает номер лексемы в таблице
+        :return: Возвращает номер лексемы в таблице, если лексемы нет, возвращает -1
         """
         table = self.__tables.get_selected_table(t)
         string = self.__buffer.get_combined_characters()
         for index in range(len(table)):
             if table[index] == string:
+                self.__z = index
                 return index
-        raise TokenNotFound("The token was not found in the table")
+        self.__z = -1
+        return -1
 
     def writing_token_to_table(self, t: TypesOfTokenTables):
         """

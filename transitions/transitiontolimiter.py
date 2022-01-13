@@ -1,4 +1,4 @@
-from states.typescondition import TypesCondition
+from conditions.typescondition import TypesCondition
 from transitions.transitionparent import TransitionParent
 
 
