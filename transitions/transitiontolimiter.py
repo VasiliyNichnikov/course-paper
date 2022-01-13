@@ -1,4 +1,4 @@
-from states.typesstate import TypesState
+from states.typescondition import TypesCondition
 from transitions.transitionparent import TransitionParent
 
 
@@ -6,5 +6,5 @@ class TransitionToLimiter(TransitionParent):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-    def action(self) -> TypesState | bool:
-        return TypesState.OG
+    def action(self) -> TypesCondition | bool:
+        return TypesCondition.OG

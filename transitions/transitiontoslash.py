@@ -1,5 +1,5 @@
 from myutils import reading_next_character_and_cleaning_buffer
-from states.typesstate import TypesState
+from states.typescondition import TypesCondition
 from transitions.transitionparent import TransitionParent
 
 
@@ -7,8 +7,8 @@ class TransitionToSlash(TransitionParent):
     def __init__(self, **kwargs) -> None:
         super().__init__(**kwargs)
 
-    def action(self) -> TypesState | bool:
+    def action(self) -> TypesCondition | bool:
         if self._reader.selected_symbol != '/':
             return False
         reading_next_character_and_cleaning_buffer(self._buffer, self._reader)
-        return TypesState.C1
+        return TypesCondition.C1

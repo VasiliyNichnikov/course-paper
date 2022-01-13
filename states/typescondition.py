@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class TypesState(Enum):
+class TypesCondition(Enum):
     CS = 0  # Текущее состояние накопления лексем с возможными значениями
     H = 1  # Начало
     I = 2  # Идентификатор
