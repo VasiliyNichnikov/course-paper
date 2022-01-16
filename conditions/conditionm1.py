@@ -3,6 +3,7 @@ from characterreader import CharacterReader
 from conditions.condition import Condition
 from conditions.conditionparent import ConditionParent
 from conditions.typescondition import TypesCondition
+from tokens.typesoftokentables import TypesOfTokenTables
 from tokens.workingwithtoken import WorkingWithToken
 
 
@@ -13,10 +14,10 @@ class ConditionM1(ConditionParent):
     def action(self) -> None:
         if self._reader.selected_symbol == '>':
             self._reader.trip_first_character()
-            self._token.writing_to_token_file(1, 17)
+            self._token.writing_token_to_file(TypesOfTokenTables.LIMITERS, 17)
         elif self._reader.selected_symbol == '=':
             self._reader.trip_first_character()
-            self._token.writing_to_token_file(1, 20)
+            self._token.writing_token_to_file(TypesOfTokenTables.LIMITERS, 20)
         else:
-            self._token.writing_to_token_file(1, 19)
+            self._token.writing_token_to_file(TypesOfTokenTables.LIMITERS, 19)
         self._condition.now = TypesCondition.H

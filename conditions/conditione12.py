@@ -1,5 +1,3 @@
-from typing import List
-
 from buffer import Buffer
 from characterreader import CharacterReader
 from checkingsymbol import CheckingSymbol
@@ -8,7 +6,6 @@ from conditions.conditionparent import ConditionParent
 from conditions.typescondition import TypesCondition
 from myutils import reading_next_character, converting_string_to_numbers_writing_to_tokens
 from tokens.workingwithtoken import WorkingWithToken
-from transitions.transitionparent import TransitionParent
 
 
 class ConditionE12(ConditionParent):

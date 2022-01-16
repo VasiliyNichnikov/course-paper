@@ -1,5 +1,3 @@
-from typing import List
-
 from buffer import Buffer
 from characterreader import CharacterReader
 from checkingsymbol import CheckingSymbol
@@ -7,8 +5,8 @@ from conditions.condition import Condition
 from conditions.conditionparent import ConditionParent
 from conditions.typescondition import TypesCondition
 from myutils import cleaning_buffer_reading_next_character
+from tokens.typesoftokentables import TypesOfTokenTables
 from tokens.workingwithtoken import WorkingWithToken
-from transitions.transitionparent import TransitionParent
 
 
 class ConditionH(ConditionParent):
@@ -18,8 +16,10 @@ class ConditionH(ConditionParent):
     def action(self) -> None:
         self.__cleaning_from_code()
         checking_symbol = CheckingSymbol()
+        # print(f"Selected symbol - {self._reader.selected_symbol}; Is letter - {checking_symbol.is_value_letter(self._reader.selected_symbol)}")
         if checking_symbol.is_value_letter(self._reader.selected_symbol):
             cleaning_buffer_reading_next_character(self._buffer, self._reader)
+            # print("Transfer to I")
             self._condition.now = TypesCondition.I
         elif self._reader.selected_symbol in ['0', '1']:
             cleaning_buffer_reading_next_character(self._buffer, self._reader)
@@ -43,7 +43,7 @@ class ConditionH(ConditionParent):
             self._reader.trip_first_character()
             self._condition.now = TypesCondition.M2
         elif self._reader.selected_symbol == '}':
-            self._token.writing_to_token_file(1, 1)
+            self._token.writing_token_to_file(TypesOfTokenTables.LIMITERS, 1)
             self._condition.now = TypesCondition.V
         else:
             self._condition.now = TypesCondition.OG

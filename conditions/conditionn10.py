@@ -34,7 +34,7 @@ class ConditionN10(ConditionParent):
             self._condition.now = TypesCondition.ER
         else:
             self._token.writing_token_to_table(TypesOfTokenTables.NUMBERS)
-            self._token.writing_to_token_file(2, self._token.z)
+            self._token.writing_token_to_file(TypesOfTokenTables.NUMBERS, self._token.z)
             self._condition.now = TypesCondition.H
 
     def __cleaning_from_code(self) -> None:

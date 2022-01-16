@@ -1,7 +1,7 @@
 from typing import List
 
 from buffer import Buffer
-from config import NAME_TOKEN_FILE
+from config import TOKEN_FILE
 from tokens.tablesoftokens import TablesOfTokens
 from tokens.typesoftokentables import TypesOfTokenTables
 
@@ -47,29 +47,31 @@ class WorkingWithToken:
         """
         table = self.__tables.get_selected_table(t)
         string = self.__buffer.get_combined_characters()
-        token_exists_in_table = self.__check_if_token_exists_in_table(table, string)
+        token_exists_in_table, index = self.__check_if_token_exists_in_table(table, string)
+        # print(f"String - {string}; Token in table - {token_exists_in_table}")
         if not token_exists_in_table:
             id_element = self.__tables.add_element_to_selected_table(t, string) - 1
             self.__z = id_element
             return id_element
-        self.__z = -1
+        else:
+            self.__z = index
         return self.__z
 
     @staticmethod
-    def writing_to_token_file(n, k) -> None:
+    def writing_token_to_file(t: TypesOfTokenTables, k) -> None:
         """
         Записывает пару чисел в файл лексем
-        :param n: Номер таблицы (от 1 до 4)
+        :param t: Тип таблицы
         :param k: Номер лексемы в этой таблице
         :return: Ничего не возвращает
         """
-        with open(NAME_TOKEN_FILE, 'a', encoding="UTF-8") as file:
-            data = f"({n}, {k})"
+        with open(TOKEN_FILE, 'a', encoding="UTF-8") as file:
+            data = f"({t.value}, {k})"
             file.write(data)
 
     @staticmethod
-    def __check_if_token_exists_in_table(table: List[str], token: str) -> bool:
-        for item in table:
-            if item == token:
-                return True
-        return False
+    def __check_if_token_exists_in_table(table: List[str], token: str) -> (bool, int):
+        for i in range(len(table)):
+            if table[i] == token:
+                return True, i
+        return False, -1

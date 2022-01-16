@@ -14,11 +14,11 @@ class ConditionOG(ConditionParent):
     def action(self) -> None:
         self._buffer.clear()
         self._buffer.add(self._reader.selected_symbol)
-        self._token.writing_token_to_table(TypesOfTokenTables.LIMITERS)
+        self._token.find_token_in_selected_table(TypesOfTokenTables.LIMITERS)
 
         if self._token.z != -1:
             self._reader.trip_first_character()
-            self._token.writing_to_token_file(1, self._token.z)
+            self._token.writing_token_to_file(TypesOfTokenTables.LIMITERS, self._token.z)
             self._condition.now = TypesCondition.H
         else:
             self._condition.now = TypesCondition.ER

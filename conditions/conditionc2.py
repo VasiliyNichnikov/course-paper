@@ -1,12 +1,9 @@
-from typing import List
-
 from buffer import Buffer
 from characterreader import CharacterReader
 from conditions.condition import Condition
 from conditions.conditionparent import ConditionParent
-from tokens.workingwithtoken import WorkingWithToken
-from transitions.transitionparent import TransitionParent
 from conditions.typescondition import TypesCondition
+from tokens.workingwithtoken import WorkingWithToken
 
 
 class ConditionC2(ConditionParent):

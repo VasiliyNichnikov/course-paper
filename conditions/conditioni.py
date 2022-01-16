@@ -18,9 +18,10 @@ class ConditionI(ConditionParent):
         self.__search_token_in_service_table()
 
         if self._token.z != -1:
-            self._token.writing_to_token_file(0, self._token.z)
+            self._token.writing_token_to_file(TypesOfTokenTables.SERVICE, self._token.z)
         else:
             self._token.writing_token_to_table(TypesOfTokenTables.IDS)
+            self._token.writing_token_to_file(TypesOfTokenTables.IDS, self._token.z)
         self._condition.now = TypesCondition.H
 
     def __cleaning_from_code(self) -> None:

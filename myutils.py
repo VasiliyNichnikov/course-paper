@@ -23,7 +23,7 @@ def converting_numbers_writing_to_tokens(buffer: Buffer, token: WorkingWithToken
     buffer.clear()
     buffer.add(new_number)
     token.writing_token_to_table(TypesOfTokenTables.NUMBERS)
-    token.writing_to_token_file(2, token.z)
+    token.writing_token_to_file(3, token.z)
 
 
 def converting_string_to_numbers_writing_to_tokens(buffer: Buffer, token: WorkingWithToken) -> None:
@@ -33,4 +33,4 @@ def converting_string_to_numbers_writing_to_tokens(buffer: Buffer, token: Workin
     buffer.clear()
     buffer.add(new_number)
     token.writing_token_to_table(TypesOfTokenTables.NUMBERS)
-    token.writing_to_token_file(2, token.z)
+    token.writing_token_to_file(2, token.z)

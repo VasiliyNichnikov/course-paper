@@ -28,4 +28,4 @@ LIST_LIMITERS = {
 }
 
 CODE_FILE: final = "statics/code.txt"
-NAME_TOKEN_FILE: final = "statics/token_file.txt"
+TOKEN_FILE: final = "statics/token_file.txt"
