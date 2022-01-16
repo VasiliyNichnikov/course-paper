@@ -49,73 +49,97 @@ class Program:
     def __scanner(self) -> None:
         match self.__condition.now:
             case TypesCondition.H:
+                print("H")
                 self.__condition_h.action()
 
             case TypesCondition.I:
+                print("I")
                 self.__condition_i.action()
 
             case TypesCondition.N2:
+                print("N2")
                 self.__condition_n2.action()
 
             case TypesCondition.N8:
+                print("N8")
                 self.__condition_n8.action()
 
             case TypesCondition.N10:
+                print("N10")
                 self.__condition_n10.action()
 
             case TypesCondition.N16:
+                print("N16")
                 self.__condition_n16.action()
 
             case TypesCondition.B:
+                print("B")
                 self.__condition_b.action()
 
             case TypesCondition.O:
+                print("O")
                 self.__condition_o.action()
 
             case TypesCondition.D:
+                print("D")
                 self.__condition_d.action()
 
             case TypesCondition.HX:
+                print("HX")
                 self.__condition_hx.action()
 
             case TypesCondition.E11:
+                print("E11")
                 self.__condition_e11.action()
 
             case TypesCondition.ZN:
+                print("ZN")
                 self.__condition_zn.action()
 
             case TypesCondition.E12:
+                print("E12")
                 self.__condition_e12.action()
 
             case TypesCondition.E13:
+                print("E13")
                 self.__condition_e13.action()
 
             case TypesCondition.P1:
+                print("P1")
                 self.__condition_p1.action()
 
             case TypesCondition.P2:
+                print("P2")
                 self.__condition_p2.action()
 
             case TypesCondition.E21:
+                print("E21")
                 self.__condition_e21.action()
 
             case TypesCondition.E22:
+                print("E22")
                 self.__condition_e22.action()
 
             case TypesCondition.C1:
+                print("C1")
                 self.__condition_c1.action()
 
             case TypesCondition.C2:
+                print("C2")
                 self.__condition_c2.action()
 
             case TypesCondition.C3:
+                print("C3")
                 self.__condition_c3.action()
 
             case TypesCondition.M1:
+                print("M1")
                 self.__condition_m1.action()
 
             case TypesCondition.M2:
+                print("M2")
                 self.__condition_m2.action()
 
             case TypesCondition.OG:
+                print("OG")
                 self.__condition_og.action()

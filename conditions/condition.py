@@ -1,9 +1,9 @@
-from typescondition import TypesCondition
+from conditions.typescondition import TypesCondition
 
 
 class Condition:
     def __init__(self) -> None:
-        self.__now = TypesCondition.CS
+        self.__now = TypesCondition.H
 
     @property
     def now(self) -> TypesCondition:

@@ -1,3 +1,5 @@
+from typing import final
+
 LIST_LIMITERS = {
     1: '{',
     2: '}',
@@ -25,4 +27,5 @@ LIST_LIMITERS = {
     24: "*/"
 }
 
-name_token_file = "statics/token_file.txt"
+CODE_FILE: final = "statics/code.txt"
+NAME_TOKEN_FILE: final = "statics/token_file.txt"

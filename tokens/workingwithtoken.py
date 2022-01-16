@@ -1,7 +1,7 @@
 from typing import List
 
 from buffer import Buffer
-from config import name_token_file
+from config import NAME_TOKEN_FILE
 from tokens.tablesoftokens import TablesOfTokens
 from tokens.typesoftokentables import TypesOfTokenTables
 
@@ -37,9 +37,9 @@ class WorkingWithToken:
                 self.__z = index
                 return index
         self.__z = -1
-        return -1
+        return self.__z
 
-    def writing_token_to_table(self, t: TypesOfTokenTables):
+    def writing_token_to_table(self, t: TypesOfTokenTables) -> int:
         """
         Записывает лексему из буфера в выбранную таблицу t, если там не было этой лексемы
         :param t: Выбранная таблица
@@ -50,8 +50,10 @@ class WorkingWithToken:
         token_exists_in_table = self.__check_if_token_exists_in_table(table, string)
         if not token_exists_in_table:
             id_element = self.__tables.add_element_to_selected_table(t, string) - 1
+            self.__z = id_element
             return id_element
-        return -1
+        self.__z = -1
+        return self.__z
 
     @staticmethod
     def writing_to_token_file(n, k) -> None:
@@ -61,7 +63,7 @@ class WorkingWithToken:
         :param k: Номер лексемы в этой таблице
         :return: Ничего не возвращает
         """
-        with open(name_token_file, 'a', encoding="UTF-8") as file:
+        with open(NAME_TOKEN_FILE, 'a', encoding="UTF-8") as file:
             data = f"({n}, {k})"
             file.write(data)
 
