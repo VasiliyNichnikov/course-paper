@@ -2,8 +2,10 @@ from typing import List
 
 from buffer import Buffer
 from characterreader import CharacterReader
+from checkingsymbol import CheckingSymbol
 from conditions.condition import Condition
 from conditions.conditionparent import ConditionParent
+from conditions.typescondition import TypesCondition
 from myutils import reading_next_character
 from tokens.workingwithtoken import WorkingWithToken
 from transitions.transitionparent import TransitionParent
@@ -15,7 +17,13 @@ class ConditionN16(ConditionParent):
 
     def action(self, transitions: List[TransitionParent]) -> None:
         self.__cleaning_from_code()
-        super(ConditionN16, self).action(transitions)
+        if self._reader.selected_symbol in ['H', 'h']:
+            self._reader.trip_first_character()
+            self._condition.now = TypesCondition.HX
+        else:
+            self._condition.now = TypesCondition.ER
 
     def __cleaning_from_code(self) -> None:
-        reading_next_character(self._buffer, self._reader)
+        checking_symbol = CheckingSymbol()
+        while checking_symbol.check_hex(self._reader.selected_symbol):
+            reading_next_character(self._buffer, self._reader)
