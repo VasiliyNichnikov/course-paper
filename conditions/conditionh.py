@@ -2,8 +2,11 @@ from typing import List
 
 from buffer import Buffer
 from characterreader import CharacterReader
+from checkingsymbol import CheckingSymbol
 from conditions.condition import Condition
 from conditions.conditionparent import ConditionParent
+from conditions.typescondition import TypesCondition
+from myutils import cleaning_buffer_reading_next_character
 from tokens.workingwithtoken import WorkingWithToken
 from transitions.transitionparent import TransitionParent
 
@@ -14,7 +17,36 @@ class ConditionH(ConditionParent):
 
     def action(self, transitions: List[TransitionParent]) -> None:
         self.__cleaning_from_code()
-        super(ConditionH, self).action(transitions)
+        checking_symbol = CheckingSymbol()
+        if checking_symbol.is_value_letter(self._reader.selected_symbol):
+            cleaning_buffer_reading_next_character(self._buffer, self._reader)
+            self._condition.now = TypesCondition.I
+        elif self._reader.selected_symbol in ['0', '1']:
+            cleaning_buffer_reading_next_character(self._buffer, self._reader)
+            self._condition.now = TypesCondition.N2
+        elif self._reader.selected_symbol in ['2', '3', '4', '5', '6', '7']:
+            cleaning_buffer_reading_next_character(self._buffer, self._reader)
+            self._condition.now = TypesCondition.N8
+        elif self._reader.selected_symbol in ['8', '9']:
+            cleaning_buffer_reading_next_character(self._buffer, self._reader)
+            self._condition.now = TypesCondition.N10
+        elif self._reader.selected_symbol == '.':
+            cleaning_buffer_reading_next_character(self._buffer, self._reader)
+            self._condition.now = TypesCondition.P1
+        elif self._reader.selected_symbol == '/':
+            self._reader.trip_first_character()
+            self._condition.now = TypesCondition.C1
+        elif self._reader.selected_symbol == '<':
+            self._reader.trip_first_character()
+            self._condition.now = TypesCondition.M1
+        elif self._reader.selected_symbol == '>':
+            self._reader.trip_first_character()
+            self._condition.now = TypesCondition.M2
+        elif self._reader.selected_symbol == '}':
+            self._token.writing_to_token_file(1, 1)
+            self._condition.now = TypesCondition.V
+        else:
+            self._condition.now = TypesCondition.OG
 
     def __cleaning_from_code(self) -> None:
         while self._reader.selected_symbol in [' ', '\n']:
