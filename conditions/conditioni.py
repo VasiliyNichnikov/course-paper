@@ -5,6 +5,7 @@ from characterreader import CharacterReader
 from checkingsymbol import CheckingSymbol
 from conditions.condition import Condition
 from conditions.conditionparent import ConditionParent
+from conditions.typescondition import TypesCondition
 from myutils import reading_next_character
 from tokens.typesoftokentables import TypesOfTokenTables
 from tokens.workingwithtoken import WorkingWithToken
@@ -25,6 +26,12 @@ class ConditionI(ConditionParent):
         while checking_symbol.is_value_letter(self._reader.selected_symbol) or \
                 checking_symbol.is_value_number(self._reader.selected_symbol):
             reading_next_character(self._buffer, self._reader)
+
+        if self._token.z != 0:
+            self._token.writing_to_token_file(0, self._token.z)
+        else:
+            self._token.writing_token_to_table(TypesOfTokenTables.IDS)
+        self._condition.now = TypesCondition.H
 
     def __search_token_in_service_table(self) -> None:
         self._token.find_token_in_selected_table(TypesOfTokenTables.SERVICE)
