@@ -1,1 +1,7 @@
-{ % k, sum; k as 0; }
+{% i, k, n, sum;
+read(n);
+sum as 0;
+i as 1;
+while i <= n do [read(k) : sum as sum + k];
+write(sum / n);
+}
