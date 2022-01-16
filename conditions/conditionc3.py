@@ -4,6 +4,7 @@ from buffer import Buffer
 from characterreader import CharacterReader
 from conditions.condition import Condition
 from conditions.conditionparent import ConditionParent
+from conditions.typescondition import TypesCondition
 from tokens.workingwithtoken import WorkingWithToken
 from transitions.transitionparent import TransitionParent
 
@@ -13,4 +14,8 @@ class ConditionC3(ConditionParent):
         super().__init__(reader, buffer, token, condition)
 
     def action(self, transitions: List[TransitionParent]) -> None:
-        super(ConditionC3, self).action(transitions)
+        if self._reader.selected_symbol == '/':
+            self._reader.trip_first_character()
+            self._condition.now = TypesCondition.H
+        else:
+            self._condition.now = TypesCondition.C2
