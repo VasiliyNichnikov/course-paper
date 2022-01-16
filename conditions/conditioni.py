@@ -16,10 +16,10 @@ class ConditionI(ConditionParent):
     def __init__(self, reader: CharacterReader, buffer: Buffer, token: WorkingWithToken, condition: Condition) -> None:
         super().__init__(reader, buffer, token, condition)
 
-    def action(self, transitions: List[TransitionParent]) -> None:
+    def action(self) -> None:
         self.__cleaning_from_code()
         self.__search_token_in_service_table()
-        super(ConditionI, self).action(transitions)
+        super(ConditionI, self).action()
 
     def __cleaning_from_code(self) -> None:
         checking_symbol = CheckingSymbol()

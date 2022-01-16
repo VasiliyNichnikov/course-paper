@@ -13,7 +13,7 @@ class ConditionM2(ConditionParent):
     def __init__(self, reader: CharacterReader, buffer: Buffer, token: WorkingWithToken, condition: Condition) -> None:
         super().__init__(reader, buffer, token, condition)
 
-    def action(self, transitions: List[TransitionParent]) -> None:
+    def action(self) -> None:
         if self._reader.selected_symbol == '=':
             self._reader.trip_first_character()
             self._token.writing_to_token_file(1, 21)

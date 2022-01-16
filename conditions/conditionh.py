@@ -15,7 +15,7 @@ class ConditionH(ConditionParent):
     def __init__(self, reader: CharacterReader, buffer: Buffer, token: WorkingWithToken, condition: Condition):
         super().__init__(reader, buffer, token, condition)
 
-    def action(self, transitions: List[TransitionParent]) -> None:
+    def action(self) -> None:
         self.__cleaning_from_code()
         checking_symbol = CheckingSymbol()
         if checking_symbol.is_value_letter(self._reader.selected_symbol):

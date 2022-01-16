@@ -15,7 +15,7 @@ class ConditionB(ConditionParent):
     def __init__(self, reader: CharacterReader, buffer: Buffer, token: WorkingWithToken, condition: Condition) -> None:
         super().__init__(reader, buffer, token, condition)
 
-    def action(self, transitions: List[TransitionParent]) -> None:
+    def action(self) -> None:
         checking_symbol = CheckingSymbol()
         if checking_symbol.check_hex(self._reader.selected_symbol):
             self._condition.now = TypesCondition.N16

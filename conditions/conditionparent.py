@@ -16,9 +16,6 @@ class ConditionParent(ABC):
         self._buffer = buffer
         self._token = token
 
-    def action(self, transitions: List[TransitionParent]) -> None:
-        for transition in transitions:
-            condition: TypesCondition | bool = transition.action()
-            if isinstance(condition, TypesCondition):
-                self._condition.now = condition
-                break
+    @abstractmethod
+    def action(self) -> None:
+        pass

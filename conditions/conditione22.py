@@ -15,7 +15,7 @@ class ConditionE22(ConditionParent):
     def __init__(self, reader: CharacterReader, buffer: Buffer, token: WorkingWithToken, condition: Condition) -> None:
         super().__init__(reader, buffer, token, condition)
 
-    def action(self, transitions: List[TransitionParent]) -> None:
+    def action(self) -> None:
         checking_symbol = CheckingSymbol()
         self.__cleaning_from_code(checking_symbol)
         if checking_symbol.is_value_number(self._reader.selected_symbol) or self._reader.selected_symbol == '.':

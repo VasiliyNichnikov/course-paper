@@ -15,7 +15,7 @@ class ConditionD(ConditionParent):
     def __init__(self, reader: CharacterReader, buffer: Buffer, token: WorkingWithToken, condition: Condition) -> None:
         super().__init__(reader, buffer, token, condition)
 
-    def action(self, transitions: List[TransitionParent]) -> None:
+    def action(self) -> None:
         checking_symbol = CheckingSymbol()
         if self._reader.selected_symbol in ['H', 'h']:
             self._reader.trip_first_character()

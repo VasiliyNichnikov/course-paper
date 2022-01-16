@@ -15,7 +15,7 @@ class ConditionE21(ConditionParent):
     def __init__(self, reader: CharacterReader, buffer: Buffer, token: WorkingWithToken, condition: Condition):
         super().__init__(reader, buffer, token, condition)
 
-    def action(self, transitions: List[TransitionParent]) -> None:
+    def action(self) -> None:
         checking_symbol = CheckingSymbol()
         if self._reader.selected_symbol in ['+', '-']:
             reading_next_character(self._buffer, self._reader)

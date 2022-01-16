@@ -15,7 +15,7 @@ class ConditionP1(ConditionParent):
     def __init__(self, reader: CharacterReader, buffer: Buffer, token: WorkingWithToken, condition: Condition) -> None:
         super().__init__(reader, buffer, token, condition)
 
-    def action(self, transitions: List[TransitionParent]) -> None:
+    def action(self) -> None:
         checking_symbol = CheckingSymbol()
         if checking_symbol.is_value_number(self._reader.selected_symbol):
             reading_next_character(self._buffer, self._reader)

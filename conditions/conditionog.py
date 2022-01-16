@@ -14,7 +14,7 @@ class ConditionOG(ConditionParent):
     def __init__(self, reader: CharacterReader, buffer: Buffer, token: WorkingWithToken, condition: Condition) -> None:
         super().__init__(reader, buffer, token, condition)
 
-    def action(self, transitions: List[TransitionParent]) -> None:
+    def action(self) -> None:
         self._buffer.clear()
         self._buffer.add(self._reader.selected_symbol)
         self._token.writing_token_to_table(TypesOfTokenTables.LIMITERS)

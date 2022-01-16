@@ -15,7 +15,7 @@ class ConditionP2(ConditionParent):
     def __init__(self, reader: CharacterReader, buffer: Buffer, token: WorkingWithToken, condition: Condition) -> None:
         super().__init__(reader, buffer, token, condition)
 
-    def action(self, transitions: List[TransitionParent]) -> None:
+    def action(self) -> None:
         self.__clearing_from_code()
         checking_symbol = CheckingSymbol()
         if self._reader.selected_symbol in ['E', 'e']:

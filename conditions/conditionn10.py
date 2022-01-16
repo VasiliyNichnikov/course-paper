@@ -16,7 +16,7 @@ class ConditionN10(ConditionParent):
     def __init__(self, reader: CharacterReader, buffer: Buffer, token: WorkingWithToken, condition: Condition) -> None:
         super().__init__(reader, buffer, token, condition)
 
-    def action(self, transitions: List[TransitionParent]) -> None:
+    def action(self) -> None:
         checking_symbol = CheckingSymbol()
         self.__cleaning_from_code()
         if self._reader.selected_symbol in ['A', 'a', 'B', 'b', 'C', 'c', 'F', 'f']:
