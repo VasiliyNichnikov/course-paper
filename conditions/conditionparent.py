@@ -1,12 +1,9 @@
 from abc import abstractmethod, ABC
-from typing import List
 
 from buffer import Buffer
 from characterreader import CharacterReader
 from conditions.condition import Condition
-from conditions.typescondition import TypesCondition
 from tokens.workingwithtoken import WorkingWithToken
-from transitions.transitionparent import TransitionParent
 
 
 class ConditionParent(ABC):

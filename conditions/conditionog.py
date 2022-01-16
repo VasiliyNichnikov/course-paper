@@ -1,5 +1,3 @@
-from typing import List
-
 from buffer import Buffer
 from characterreader import CharacterReader
 from conditions.condition import Condition
@@ -7,7 +5,6 @@ from conditions.conditionparent import ConditionParent
 from conditions.typescondition import TypesCondition
 from tokens.typesoftokentables import TypesOfTokenTables
 from tokens.workingwithtoken import WorkingWithToken
-from transitions.transitionparent import TransitionParent
 
 
 class ConditionOG(ConditionParent):
@@ -19,7 +16,7 @@ class ConditionOG(ConditionParent):
         self._buffer.add(self._reader.selected_symbol)
         self._token.writing_token_to_table(TypesOfTokenTables.LIMITERS)
 
-        if self._token.z != 0:
+        if self._token.z != -1:
             self._reader.trip_first_character()
             self._token.writing_to_token_file(1, self._token.z)
             self._condition.now = TypesCondition.H

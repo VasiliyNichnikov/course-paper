@@ -1,5 +1,3 @@
-from typing import List
-
 from buffer import Buffer
 from characterreader import CharacterReader
 from checkingsymbol import CheckingSymbol
@@ -9,7 +7,6 @@ from conditions.typescondition import TypesCondition
 from myutils import reading_next_character
 from tokens.typesoftokentables import TypesOfTokenTables
 from tokens.workingwithtoken import WorkingWithToken
-from transitions.transitionparent import TransitionParent
 
 
 class ConditionN10(ConditionParent):
