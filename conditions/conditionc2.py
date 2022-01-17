@@ -13,10 +13,10 @@ class ConditionC2(ConditionParent):
     def action(self) -> None:
         self.__clearing_from_code()
         if self._reader.selected_symbol == '}':
-            self._condition = TypesCondition.ER
+            self._condition.now = TypesCondition.ER
         else:
             self._reader.trip_first_character()
-            self._condition = TypesCondition.C3
+            self._condition.now = TypesCondition.C3
 
     def __clearing_from_code(self) -> None:
         while self._reader.selected_symbol != '*' and self._reader.selected_symbol != '}':
