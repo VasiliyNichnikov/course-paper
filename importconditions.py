@@ -22,3 +22,8 @@ from conditions.conditionc3 import ConditionC3
 from conditions.conditionm1 import ConditionM1
 from conditions.conditionm2 import ConditionM2
 from conditions.conditionog import ConditionOG
+from conditions.conditionassignment import ConditionAssignment
+from conditions.conditionequally import ConditionEqually
+from conditions.conditionunequal import ConditionUnequally
+from conditions.conditionor import ConditionOr
+from conditions.conditionand import ConditionAnd

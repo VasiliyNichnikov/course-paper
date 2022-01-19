@@ -1,7 +1,4 @@
-{% i, k, n, sum;
-read(n);
-sum as 0;
-i as 1;
-while i <= n do [read(k) : sum as sum + k];
-write(sum / n);
-}
+int N, i
+writeln N
+for i = 0 to i < N begin float num; writeln num; num := num * 2.5;  if (num / 2 == 3 && num >= 10) readln num end
+end

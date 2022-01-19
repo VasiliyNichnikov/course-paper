@@ -2,7 +2,7 @@ from buffer import Buffer
 from characterreader import CharacterReader
 from conditions.condition import Condition
 from conditions.typescondition import TypesCondition
-from initconditions import *
+from importconditions import *
 from tokens.tablesoftokens import TablesOfTokens
 from tokens.workingwithtoken import WorkingWithToken
 
@@ -41,6 +41,11 @@ class Program:
         self.__condition_m1 = ConditionM1(self.__reader, self.__buffer, self.__token, self.__condition)
         self.__condition_m2 = ConditionM2(self.__reader, self.__buffer, self.__token, self.__condition)
         self.__condition_og = ConditionOG(self.__reader, self.__buffer, self.__token, self.__condition)
+        self.__condition_assignment = ConditionAssignment(self.__reader, self.__buffer, self.__token, self.__condition)
+        self.__condition_equally = ConditionEqually(self.__reader, self.__buffer, self.__token, self.__condition)
+        self.__condition_unequally = ConditionUnequally(self.__reader, self.__buffer, self.__token, self.__condition)
+        self.__condition_or = ConditionOr(self.__reader, self.__buffer, self.__token, self.__condition)
+        self.__condition_and = ConditionAnd(self.__reader, self.__buffer, self.__token, self.__condition)
 
     def run(self) -> None:
         while self.__condition.now != TypesCondition.V and self.__condition.now != TypesCondition.ER:
@@ -143,3 +148,23 @@ class Program:
             case TypesCondition.OG:
                 print("OG")
                 self.__condition_og.action()
+
+            case TypesCondition.ASSIGNMENT:
+                print("ASSIGNMENT")
+                self.__condition_assignment.action()
+
+            case TypesCondition.EQUALLY:
+                print("EQUALLY")
+                self.__condition_equally.action()
+
+            case TypesCondition.UNEQUAL:
+                print("UNEQUAL")
+                self.__condition_unequally.action()
+
+            case TypesCondition.OR:
+                print("OR")
+                self.__condition_or.action()
+
+            case TypesCondition.AND:
+                print("AND")
+                self.__condition_and.action()

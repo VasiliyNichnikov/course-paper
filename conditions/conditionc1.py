@@ -16,5 +16,5 @@ class ConditionC1(ConditionParent):
             self._reader.trip_first_character()
             self._condition.now = TypesCondition.C2
         else:
-            self._token.writing_token_to_file(TypesOfTokenTables.LIMITERS, 15)
+            self._token.writing_token_to_file(TypesOfTokenTables.LIMITERS, 4)
             self._condition.now = TypesCondition.H

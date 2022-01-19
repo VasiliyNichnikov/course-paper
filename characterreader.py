@@ -27,7 +27,7 @@ class CharacterReader:
         Обрезает первый символ из всей строки
         :return:
         """
-        if len(self.__code) > 0:
+        if len(self.__code) > 1:
             self.__code = self.__code[1:]
             self.__selected_symbol = self.__code[0]
             print(f"selected symbol: '{self.__selected_symbol}'")

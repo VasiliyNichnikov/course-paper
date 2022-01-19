@@ -14,8 +14,8 @@ class ConditionHX(ConditionParent):
 
     def action(self) -> None:
         checking_symbol = CheckingSymbol()
-        if checking_symbol.is_value_letter(self._reader.selected_symbol) or checking_symbol.is_value_number(
-                self._reader.selected_symbol):
+        if checking_symbol.is_value_letter(self._reader.selected_symbol) \
+                or checking_symbol.is_value_number(self._reader.selected_symbol):
             self._condition.now = TypesCondition.ER
         else:
             converting_numbers_writing_to_tokens(self._buffer, self._token, 16)

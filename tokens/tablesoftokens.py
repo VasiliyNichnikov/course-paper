@@ -5,19 +5,48 @@ from tokens.typesoftokentables import TypesOfTokenTables
 
 class TablesOfTokens:
     def __init__(self) -> None:
-        self.__service: List[str] = ["read", "write", "if",
-                                     "then", "else", "for",
-                                     "to", "while", "do",
-                                     "true", "false", "or",
-                                     "and", "not", "as"]
-        self.__limiters: List[str] = ['{', '}', '%',
-                                      '!', '$', ',',
-                                      ';', '[', ']',
-                                      ':', '(', ')',
-                                      '+', '-', '*',
-                                      '/', '=', "<>",
-                                      '>', '<', "<=",
-                                      ">=", "/*", "*/"]
+        self.__service: List[str] = ["readln",  # 0
+                                     "writeln",  # 1
+                                     "if",  # 2
+                                     "else",  # 3
+                                     "for",  # 4
+                                     "to",  # 5
+                                     "while",  # 6
+                                     "true",  # 7
+                                     "false",  # 8
+                                     "end",  # 9
+                                     "int",  # 10
+                                     "float",  # 11
+                                     "bool",  # 12
+                                     "begin",  # 13
+                                     "next",  # 14
+                                     "step"  # 15
+                                     ]
+
+        self.__limiters: List[str] = ['!',  # 0
+                                      ',',  # 1
+                                      ';',  # 2
+                                      ':',  # 3
+                                      '(',  # 4
+                                      ')',  # 5
+                                      '+',  # 6
+                                      '-',  # 7
+                                      '*',  # 8
+                                      '/',  # 9
+                                      '==',  # 10
+                                      "!=",  # 11
+                                      '>',  # 12
+                                      '<',  # 13
+                                      "<=",  # 14
+                                      ">=",  # 15
+                                      "(*",  # 16
+                                      "*)",  # 17
+                                      "||",  # 18
+                                      "&&",  # 19
+                                      "!",  # 20
+                                      ":=",  # 21
+                                      "\n"  # 22
+                                      ]
         self.__ids: List[str] = []
         self.__numbers: List[str] = []
         self.__tables = {

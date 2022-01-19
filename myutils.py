@@ -23,14 +23,14 @@ def converting_numbers_writing_to_tokens(buffer: Buffer, token: WorkingWithToken
     buffer.clear()
     buffer.add(new_number)
     token.writing_token_to_table(TypesOfTokenTables.NUMBERS)
-    token.writing_token_to_file(3, token.z)
+    token.writing_token_to_file(TypesOfTokenTables.NUMBERS, token.z)
 
 
 def converting_string_to_numbers_writing_to_tokens(buffer: Buffer, token: WorkingWithToken) -> None:
     actions_numbers = WorkingWithNumber()
     number: str = buffer.get_combined_characters()
-    new_number = actions_numbers.converting_from_string_to_decimal_form(number)
+    # new_number = actions_numbers.converting_from_string_to_decimal_form(number)
     buffer.clear()
-    buffer.add(new_number)
+    buffer.add(number)
     token.writing_token_to_table(TypesOfTokenTables.NUMBERS)
-    token.writing_token_to_file(2, token.z)
+    token.writing_token_to_file(TypesOfTokenTables.NUMBERS, token.z)

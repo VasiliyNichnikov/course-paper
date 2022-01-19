@@ -16,10 +16,8 @@ class ConditionH(ConditionParent):
     def action(self) -> None:
         self.__cleaning_from_code()
         checking_symbol = CheckingSymbol()
-        # print(f"Selected symbol - {self._reader.selected_symbol}; Is letter - {checking_symbol.is_value_letter(self._reader.selected_symbol)}")
         if checking_symbol.is_value_letter(self._reader.selected_symbol):
             cleaning_buffer_reading_next_character(self._buffer, self._reader)
-            # print("Transfer to I")
             self._condition.now = TypesCondition.I
         elif self._reader.selected_symbol in ['0', '1']:
             cleaning_buffer_reading_next_character(self._buffer, self._reader)
@@ -33,21 +31,35 @@ class ConditionH(ConditionParent):
         elif self._reader.selected_symbol == '.':
             cleaning_buffer_reading_next_character(self._buffer, self._reader)
             self._condition.now = TypesCondition.P1
-        elif self._reader.selected_symbol == '/':
+        elif self._reader.selected_symbol == '(':
             self._reader.trip_first_character()
             self._condition.now = TypesCondition.C1
         elif self._reader.selected_symbol == '<':
+            # cleaning_buffer_reading_next_character(self._buffer, self._reader)
             self._reader.trip_first_character()
             self._condition.now = TypesCondition.M1
         elif self._reader.selected_symbol == '>':
+            # cleaning_buffer_reading_next_character(self._buffer, self._reader)
             self._reader.trip_first_character()
             self._condition.now = TypesCondition.M2
-        elif self._reader.selected_symbol == '}':
-            self._token.writing_token_to_file(TypesOfTokenTables.LIMITERS, 1)
-            self._condition.now = TypesCondition.V
+        elif self._reader.selected_symbol == ':':
+            cleaning_buffer_reading_next_character(self._buffer, self._reader)
+            self._condition.now = TypesCondition.ASSIGNMENT
+        elif self._reader.selected_symbol == '=':
+            cleaning_buffer_reading_next_character(self._buffer, self._reader)
+            self._condition.now = TypesCondition.EQUALLY
+        elif self._reader.selected_symbol == '!':
+            cleaning_buffer_reading_next_character(self._buffer, self._reader)
+            self._condition.now = TypesCondition.UNEQUAL
+        elif self._reader.selected_symbol == '|':
+            cleaning_buffer_reading_next_character(self._buffer, self._reader)
+            self._condition.now = TypesCondition.OR
+        elif self._reader.selected_symbol == '&':
+            cleaning_buffer_reading_next_character(self._buffer, self._reader)
+            self._condition.now = TypesCondition.AND
         else:
             self._condition.now = TypesCondition.OG
 
     def __cleaning_from_code(self) -> None:
-        while self._reader.selected_symbol in [' ', '\n']:
+        while self._reader.selected_symbol in [' ']:
             self._reader.trip_first_character()

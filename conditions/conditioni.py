@@ -1,4 +1,5 @@
 from buffer import Buffer
+from characterreader import ArrayOverflowError
 from characterreader import CharacterReader
 from checkingsymbol import CheckingSymbol
 from conditions.condition import Condition
@@ -14,20 +15,32 @@ class ConditionI(ConditionParent):
         super().__init__(reader, buffer, token, condition)
 
     def action(self) -> None:
-        self.__cleaning_from_code()
-        self.__search_token_in_service_table()
+        try:
+            self.__cleaning_from_code()
+            self.__search_token_in_service_table()
 
-        if self._token.z != -1:
-            self._token.writing_token_to_file(TypesOfTokenTables.SERVICE, self._token.z)
-        else:
-            self._token.writing_token_to_table(TypesOfTokenTables.IDS)
-            self._token.writing_token_to_file(TypesOfTokenTables.IDS, self._token.z)
-        self._condition.now = TypesCondition.H
+            if self._token.z != -1:
+                self._token.writing_token_to_file(TypesOfTokenTables.SERVICE, self._token.z)
+            else:
+                self._token.writing_token_to_table(TypesOfTokenTables.IDS)
+                self._token.writing_token_to_file(TypesOfTokenTables.IDS, self._token.z)
+            self._condition.now = TypesCondition.H
+
+        except ArrayOverflowError:
+            if self._buffer.get_combined_characters() == "end":
+                self.__search_token_in_service_table()
+                if self._token.z != -1:
+                    self._token.writing_token_to_file(TypesOfTokenTables.SERVICE, self._token.z)
+                self._condition.now = TypesCondition.V
+            else:
+                self._condition.now = TypesCondition.ER
 
     def __cleaning_from_code(self) -> None:
         checking_symbol = CheckingSymbol()
         while checking_symbol.is_value_letter(self._reader.selected_symbol) or \
                 checking_symbol.is_value_number(self._reader.selected_symbol):
+            # if self._buffer.get_combined_characters() == "end":
+            #     break
             reading_next_character(self._buffer, self._reader)
 
     def __search_token_in_service_table(self) -> None:

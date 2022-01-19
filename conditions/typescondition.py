@@ -28,3 +28,9 @@ class TypesCondition(Enum):
     OG = 23  # Ограничитель
     V = 24  # Выход
     ER = 25  # Ошибка
+    ASSIGNMENT = 26  # Присвоение
+    EQUALLY = 27  # Равно
+    UNEQUAL = 28  # Неравно
+    OR = 29 # Или
+    AND = 30 # И
+
