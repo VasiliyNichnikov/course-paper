@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 
 from tokens.typesoftokentables import TypesOfTokenTables
 
@@ -22,7 +22,6 @@ class TablesOfTokens:
                                      "next",  # 14
                                      "step"  # 15
                                      ]
-
         self.__limiters: List[str] = ['!',  # 0
                                       ',',  # 1
                                       ';',  # 2
@@ -49,11 +48,14 @@ class TablesOfTokens:
                                       ]
         self.__ids: List[str] = []
         self.__numbers: List[str] = []
+        self.__tokens: List[Tuple] = []
+
         self.__tables = {
-            TypesOfTokenTables.SERVICE: self.__service,
-            TypesOfTokenTables.LIMITERS: self.__limiters,
-            TypesOfTokenTables.IDS: self.__ids,
-            TypesOfTokenTables.NUMBERS: self.__numbers
+            TypesOfTokenTables.SERVICE.value: self.__service,
+            TypesOfTokenTables.LIMITERS.value: self.__limiters,
+            TypesOfTokenTables.IDS.value: self.__ids,
+            TypesOfTokenTables.NUMBERS.value: self.__numbers,
+            TypesOfTokenTables.TOKENS.value: self.__tokens
         }
 
     @property
@@ -72,10 +74,17 @@ class TablesOfTokens:
     def numbers(self) -> List[str]:
         return self.__numbers
 
-    def get_selected_table(self, t: TypesOfTokenTables) -> List[str]:
-        table = self.__tables[t]
+    @property
+    def tokens(self) -> List[Tuple]:
+        return self.__tokens
+
+    def get_selected_table(self, t: TypesOfTokenTables | int) -> List[str]:
+        index = t
+        if isinstance(t, TypesOfTokenTables):
+            index = t.value
+        table = self.__tables[index]
         return table.copy()
 
-    def add_element_to_selected_table(self, t: TypesOfTokenTables, element: str) -> int:
-        self.__tables[t].append(element)
-        return len(self.__tables[t])
+    def add_element_to_selected_table(self, t: TypesOfTokenTables, element: str | Tuple) -> int:
+        self.__tables[t.value].append(element)
+        return len(self.__tables[t.value])

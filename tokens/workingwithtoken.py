@@ -1,7 +1,7 @@
 from typing import List
 
-from buffer import Buffer
 from config import TOKEN_FILE
+from lexicalanalyzer.buffer import Buffer
 from tokens.tablesoftokens import TablesOfTokens
 from tokens.typesoftokentables import TypesOfTokenTables
 
@@ -57,14 +57,14 @@ class WorkingWithToken:
             self.__z = index
         return self.__z
 
-    @staticmethod
-    def writing_token_to_file(t: TypesOfTokenTables, k) -> None:
+    def writing_token_to_file(self, t: TypesOfTokenTables, k) -> None:
         """
         Записывает пару чисел в файл лексем
         :param t: Тип таблицы
         :param k: Номер лексемы в этой таблице
         :return: Ничего не возвращает
         """
+        self.__tables.add_element_to_selected_table(TypesOfTokenTables.TOKENS, (t.value, k))
         with open(TOKEN_FILE, 'a', encoding="UTF-8") as file:
             data = f"({t.value}, {k})"
             file.write(data)

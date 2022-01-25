@@ -1,8 +1,8 @@
-from buffer import Buffer
-from characterreader import CharacterReader
+from lexicalanalyzer.buffer import Buffer
+from lexicalanalyzer.characterreader import CharacterReader
 from tokens.typesoftokentables import TypesOfTokenTables
 from tokens.workingwithtoken import WorkingWithToken
-from workingwithnumber import WorkingWithNumber
+from lexicalanalyzer.workingwithnumber import WorkingWithNumber
 
 
 def cleaning_buffer_reading_next_character(buffer: Buffer, reader: CharacterReader) -> None:

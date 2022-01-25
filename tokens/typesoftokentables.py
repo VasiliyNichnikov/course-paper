@@ -6,3 +6,4 @@ class TypesOfTokenTables(Enum):
     LIMITERS = 1
     IDS = 2
     NUMBERS = 3
+    TOKENS = 4

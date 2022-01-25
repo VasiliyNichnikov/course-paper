@@ -1,5 +1,8 @@
 from config import CODE_FILE, TOKEN_FILE
-from program import Program
+from lexicalanalyzer import LexicalAnalyzer
+from syntaxanalyzer import SyntaxAnalyzer
+from tokens.tablesoftokens import TablesOfTokens
+from tokens.controllertokens import ControllerTokens
 
 
 def main() -> None:
@@ -13,11 +16,22 @@ def clean_tokens() -> None:
 
 
 def run_program() -> None:
-    with open(CODE_FILE, 'r', encoding="UTF-8") as file:
-        read = file.read()
-        p = Program(read)
-        p.run()
+    tables = TablesOfTokens()
+    lexical(tables)
+    syntax(tables)
 
+
+def lexical(tables: TablesOfTokens) -> None:
+    with open(CODE_FILE, 'r', encoding="UTF-8") as file:
+        code = file.read()
+        la = LexicalAnalyzer(tables, code)
+        la.run()
+
+
+def syntax(tables: TablesOfTokens) -> None:
+    controller_tokens = ControllerTokens(tables)
+    sa = SyntaxAnalyzer(controller_tokens)
+    sa.run()
 
 if __name__ == '__main__':
     main()
