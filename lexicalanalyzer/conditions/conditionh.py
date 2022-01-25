@@ -34,11 +34,9 @@ class ConditionH(ConditionParent):
             self._reader.trip_first_character()
             self._condition.now = TypesCondition.C1
         elif self._reader.selected_symbol == '<':
-            # cleaning_buffer_reading_next_character(self._buffer, self._reader)
             self._reader.trip_first_character()
             self._condition.now = TypesCondition.M1
         elif self._reader.selected_symbol == '>':
-            # cleaning_buffer_reading_next_character(self._buffer, self._reader)
             self._reader.trip_first_character()
             self._condition.now = TypesCondition.M2
         elif self._reader.selected_symbol == ':':

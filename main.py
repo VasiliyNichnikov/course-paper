@@ -33,5 +33,6 @@ def syntax(tables: TablesOfTokens) -> None:
     sa = SyntaxAnalyzer(controller_tokens)
     sa.run()
 
+
 if __name__ == '__main__':
     main()

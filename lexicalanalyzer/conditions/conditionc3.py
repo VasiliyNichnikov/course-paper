@@ -13,6 +13,8 @@ class ConditionC3(ConditionParent):
     def action(self) -> None:
         if self._reader.selected_symbol == ')':
             self._reader.trip_first_character()
+            if self._reader.selected_symbol == '\n':
+                self._reader.trip_first_character()
             self._condition.now = TypesCondition.H
         else:
             self._condition.now = TypesCondition.C2
