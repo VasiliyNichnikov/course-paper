@@ -13,22 +13,31 @@ class ControllerTokens:
 
     def reading_next_token(self) -> None:
         self.__token_now: Tuple = self.__tables.tokens[0]
+        print(f"Token now - {self.__token_now}")
         self.__tables.tokens.pop(0)
 
-    def is_current_token_for_s(self, s: str) -> bool:
-        number_table, number_element = self.__token_now
-        selected_table = self.__get_selected_table(number_table, number_element)
-        return selected_table[number_table] == s
+    def is_current_token_for_s(self, s: str | List[str]) -> bool:
+        if isinstance(s, str):
+            return self.__check_token_s(s)
+        else:
+            for item in s:
+                if self.__check_token_s(item):
+                    return True
+        return False
 
     def is_token_id(self) -> bool:
         number_table = self.__token_now[0]
-        selected_table = self.__tables.get_selected_table(number_table)
-        return selected_table == TypesOfTokenTables.IDS.value
+        return number_table == TypesOfTokenTables.IDS.value
 
     def is_token_number(self) -> bool:
         number_table = self.__token_now[0]
-        selected_table = self.__tables.get_selected_table(number_table)
-        return selected_table == TypesOfTokenTables.NUMBERS.value
+        return number_table == TypesOfTokenTables.NUMBERS.value
+
+    def __check_token_s(self, s: str) -> bool:
+        number_table, number_element = self.__token_now
+        selected_table = self.__get_selected_table(number_table, number_element)
+        print(f"Selected element - {selected_table[number_element]}; Number table: {number_table}; S - '{s}'")
+        return selected_table[number_element] == s
 
     def __get_selected_table(self, number_table: int, index_element: int) -> List[str]:
         selected_table = self.__tables.get_selected_table(number_table)

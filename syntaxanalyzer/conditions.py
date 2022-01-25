@@ -19,33 +19,36 @@ class Program(ConditionParent):
     def action(self) -> None:
         body = Body(self._ct)
         body.action()
-        if self._ct.is_current_token_for_s("end") is False:
-            print("Error Program")  # TODO error
 
 
 class Body(ConditionParent):
     def __init__(self, ct: ControllerTokens) -> None:
         super().__init__(ct)
+        self.__end = False
 
     def action(self) -> None:
         self.__checking()
-        while self._ct.is_current_token_for_s(":") or self._ct.is_current_token_for_s("/n"):
+        if self.__end:
+            return
+        while self._ct.is_current_token_for_s([":", "\n"]):
+            self._ct.reading_next_token()
             self.__checking()
+            if self.__end:
+                return
 
     def __checking(self) -> None:
         transition: ConditionParent | None = None
-        if self._ct.is_current_token_for_s("int") \
-                or self._ct.is_current_token_for_s("bool") \
-                or self._ct.is_current_token_for_s("float"):
+        if self._ct.is_current_token_for_s(["int", "bool", "float"]):
+            self._ct.reading_next_token()
             transition = ID(self._ct)
-        elif self._ct.is_current_token_for_s(":=") \
-                or self._ct.is_current_token_for_s("if") \
-                or self._ct.is_current_token_for_s("for") \
-                or self._ct.is_current_token_for_s("while") \
-                or self._ct.is_current_token_for_s("begin") \
-                or self._ct.is_current_token_for_s("writeln") \
-                or self._ct.is_current_token_for_s("readln"):
+        elif self._ct.is_token_id() \
+                or self._ct.is_current_token_for_s(["if", "for", "while", "begin", "writeln", "readln"]):
             transition = Operator(self._ct)
+        elif self._ct.is_current_token_for_s("end"):
+            print("The program is correct")
+            self.__end = True
+            return
+
         if transition is None:
             print("Error Body")  # TODO Error
         else:
@@ -109,6 +112,7 @@ class Composite(ConditionParent):
     def action(self) -> None:
         self.__checking()
         while self._ct.is_current_token_for_s(";"):
+            self._ct.reading_next_token()
             self.__checking()
         if self._ct.is_current_token_for_s("end"):
             self._ct.reading_next_token()
@@ -116,13 +120,8 @@ class Composite(ConditionParent):
             print("Error Composite 1")  # TODO Error
 
     def __checking(self) -> None:
-        if self._ct.is_current_token_for_s(":=") \
-                or self._ct.is_current_token_for_s("if") \
-                or self._ct.is_current_token_for_s("for") \
-                or self._ct.is_current_token_for_s("while") \
-                or self._ct.is_current_token_for_s("begin") \
-                or self._ct.is_current_token_for_s("writeln") \
-                or self._ct.is_current_token_for_s("readln"):
+        if self._ct.is_token_id() \
+                or self._ct.is_current_token_for_s(["if", "for", "while", "begin", "writeln", "readln"]):
             operator = Operator(self._ct)
             operator.action()
         else:
@@ -148,11 +147,7 @@ class Expression(ConditionParent):
 
     def action(self) -> None:
         self.__transition_operand()
-        while self._ct.is_current_token_for_s("!=") \
-                or self._ct.is_current_token_for_s("==") \
-                or self._ct.is_current_token_for_s("<") \
-                or self._ct.is_current_token_for_s("<=") or self._ct.is_current_token_for_s(">") \
-                or self._ct.is_current_token_for_s(">="):
+        while self._ct.is_current_token_for_s(["!=", "==", "<", "<=", ">", ">="]):
             self._ct.reading_next_token()
             self.__transition_operand()
 
@@ -167,9 +162,7 @@ class Operand(ConditionParent):
 
     def action(self) -> None:
         self.__transition_summand()
-        while self._ct.is_current_token_for_s("+") \
-                or self._ct.is_current_token_for_s("-") \
-                or self._ct.is_current_token_for_s("||"):
+        while self._ct.is_current_token_for_s(["+", "-", "||"]):
             self._ct.reading_next_token()
             self.__transition_summand()
 
@@ -184,9 +177,7 @@ class Summand(ConditionParent):
 
     def action(self) -> None:
         self.__transition_multiplier()
-        while self._ct.is_current_token_for_s("*") \
-                or self._ct.is_current_token_for_s("/") \
-                or self._ct.is_current_token_for_s("&&"):
+        while self._ct.is_current_token_for_s(["*", "/", "&&"]):
             self._ct.reading_next_token()
             self.__transition_multiplier()
 
@@ -202,8 +193,7 @@ class Multiplier(ConditionParent):
     def action(self) -> None:
         if self._ct.is_token_id() \
                 or self._ct.is_token_number() \
-                or self._ct.is_current_token_for_s("true") \
-                or self._ct.is_current_token_for_s("false"):
+                or self._ct.is_current_token_for_s(["true", "false"]):
             self._ct.reading_next_token()
         elif self._ct.is_current_token_for_s("!"):
             self._ct.reading_next_token()
@@ -232,18 +222,18 @@ class Conditional(ConditionParent):
             expression.action()
             if self._ct.is_current_token_for_s(")"):
                 self._ct.reading_next_token()
-                self.__transition_operand()
+                self.__transition_operator()
                 while self._ct.is_current_token_for_s("else"):
                     self._ct.reading_next_token()
-                    self.__transition_operand()
+                    self.__transition_operator()
             else:
                 print("Error Conditional 1")  # TODO Error
         else:
             print("Error Conditional 2")  # TODO Error
 
-    def __transition_operand(self) -> None:
-        operand = Operand(self._ct)
-        operand.action()
+    def __transition_operator(self) -> None:
+        operator = Operator(self._ct)
+        operator.action()
 
 
 class FixedCycle(ConditionParent):
@@ -303,6 +293,7 @@ class Entry(ConditionParent):
         while self._ct.is_current_token_for_s(","):
             self._ct.reading_next_token()
             self.__checking()
+        print("End Entry")
 
     def __checking(self) -> None:
         if self._ct.is_token_id():
