@@ -13,7 +13,6 @@ class CharacterReader:
     def __init__(self, code: str) -> None:
         self.__code = code
         self.__selected_symbol = self.__code[0]
-        print(f"selected symbol: '{self.__selected_symbol}'")
 
     @property
     def selected_symbol(self) -> str:
@@ -30,6 +29,5 @@ class CharacterReader:
         if len(self.__code) > 1:
             self.__code = self.__code[1:]
             self.__selected_symbol = self.__code[0]
-            print(f"selected symbol: '{self.__selected_symbol}'")
         else:
             raise ArrayOverflowError("An array overflow has occurred")

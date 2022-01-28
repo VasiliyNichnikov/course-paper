@@ -1,4 +1,4 @@
-from lexicalanalyzer.conditions.typescondition import TypesCondition
+from lexicalanalyzer.typescondition import TypesCondition
 
 
 class Condition:

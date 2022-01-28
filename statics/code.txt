@@ -1,6 +1,5 @@
 int N, i
 float num
-writeln N
-(* Hello World *)
+writeln N (* Hello World *)
 for i := 0 to i < N begin writeln num; num := num * 2.5;  if (num / 2 == 3 && num >= 10) readln num end next
 end

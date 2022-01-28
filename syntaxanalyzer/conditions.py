@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 
+from syntaxanalyzer.syntaxisserrors import print_error
 from tokens.controllertokens import ControllerTokens
 
 
@@ -45,12 +46,12 @@ class Body(ConditionParent):
                 or self._ct.is_current_token_for_s(["if", "for", "while", "begin", "writeln", "readln"]):
             transition = Operator(self._ct)
         elif self._ct.is_current_token_for_s("end"):
-            print("The program is correct")
+            # Программа завершена корректна
             self.__end = True
             return
 
         if transition is None:
-            print("Error Body")  # TODO Error
+            print_error("ошибка в теле программы")
         else:
             transition.action()
 
@@ -67,7 +68,7 @@ class ID(ConditionParent):
                 if self._ct.is_token_id():
                     self._ct.reading_next_token()
                 else:
-                    print("Error ID")  # TODO Error
+                    print_error("не верно объявлен идентификатор")
 
 
 class Operator(ConditionParent):
@@ -77,29 +78,22 @@ class Operator(ConditionParent):
     def action(self) -> None:
         transition: ConditionParent | None = None
         if self._ct.is_token_id():
-            # self._ct.reading_next_token()
             transition = Assignments(self._ct)
         elif self._ct.is_current_token_for_s("begin"):
-            # self._ct.reading_next_token()
             transition = Composite(self._ct)
         elif self._ct.is_current_token_for_s("if"):
-            # self._ct.reading_next_token()
             transition = Conditional(self._ct)
         elif self._ct.is_current_token_for_s("for"):
-            # self._ct.reading_next_token()
             transition = FixedCycle(self._ct)
         elif self._ct.is_current_token_for_s("while"):
-            # self._ct.reading_next_token()
             transition = ConditionCycle(self._ct)
         elif self._ct.is_current_token_for_s("writeln"):
-            # self._ct.reading_next_token()
             transition = Entry(self._ct)
         elif self._ct.is_current_token_for_s("readln"):
-            # self._ct.reading_next_token()
             transition = Conclusion(self._ct)
 
         if transition is None:
-            print("Error Operator")  # TODO Error
+            print_error("не верно обработан оператор")
         else:
             self._ct.reading_next_token()
             transition.action()
@@ -117,7 +111,7 @@ class Composite(ConditionParent):
         if self._ct.is_current_token_for_s("end"):
             self._ct.reading_next_token()
         else:
-            print("Error Composite 1")  # TODO Error
+            print_error("не верно обработан составной оператор")
 
     def __checking(self) -> None:
         if self._ct.is_token_id() \
@@ -125,7 +119,7 @@ class Composite(ConditionParent):
             operator = Operator(self._ct)
             operator.action()
         else:
-            print("Error Composite 2")  # TODO Error
+            print_error("не верно обработан составной оператор")
 
 
 class Assignments(ConditionParent):
@@ -138,7 +132,7 @@ class Assignments(ConditionParent):
             expression = Expression(self._ct)
             expression.action()
         else:
-            print("Error Assignments")  # TODO Error
+            print_error("не верно обработано выражение")
 
 
 class Expression(ConditionParent):
@@ -206,9 +200,9 @@ class Multiplier(ConditionParent):
             if self._ct.is_current_token_for_s(")"):
                 self._ct.reading_next_token()
             else:
-                print("Error Multiplier 1")  # TODO Error
+                print_error("не верно обработан множитель")
         else:
-            print("Error Multiplier 2")  # TODO Error
+            print_error("не верно обработан множитель")
 
 
 class Conditional(ConditionParent):
@@ -227,9 +221,9 @@ class Conditional(ConditionParent):
                     self._ct.reading_next_token()
                     self.__transition_operator()
             else:
-                print("Error Conditional 1")  # TODO Error
+                print_error("не верно обработан условный оператор")
         else:
-            print("Error Conditional 2")  # TODO Error
+            print_error("не верно обработан условный оператор")
 
     def __transition_operator(self) -> None:
         operator = Operator(self._ct)
@@ -256,11 +250,11 @@ class FixedCycle(ConditionParent):
                 if self._ct.is_current_token_for_s("next"):
                     self._ct.reading_next_token()
                 else:
-                    print("Error FixedCycle 1")  # TODO Error
+                    print_error("не верно обработан фиксированный цикл")
             else:
-                print("Error FixedCycle 2")  # TODO Error
+                print_error("не верно обработан фиксированный цикл")
         else:
-            print("Error FixedCycle 3")  # TODO Error
+            print_error("не верно обработан фиксированный цикл")
 
     def __transition_expression(self) -> None:
         expression = Expression(self._ct)
@@ -279,9 +273,9 @@ class ConditionCycle(ConditionParent):
             if self._ct.is_current_token_for_s(")"):
                 self._ct.reading_next_token()
             else:
-                print("Error ConditionCycle 1")  # TODO Error
+                print_error("не верно обработан условный цикл")
         else:
-            print("Error ConditionCycle 2")  # TODO Error
+            print_error("не верно обработан условный цикл")
 
 
 class Entry(ConditionParent):
@@ -293,13 +287,12 @@ class Entry(ConditionParent):
         while self._ct.is_current_token_for_s(","):
             self._ct.reading_next_token()
             self.__checking()
-        print("End Entry")
 
     def __checking(self) -> None:
         if self._ct.is_token_id():
             self._ct.reading_next_token()
         else:
-            print("Error Entry 1")  # TODO Error
+            print_error("не верно обработан оператор ввода")
 
 
 class Conclusion(ConditionParent):
