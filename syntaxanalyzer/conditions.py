@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from syntaxanalyzer.syntaxisserrors import print_error
+from syntaxanalyzer.syntaxerrors import *
 from tokens.controllertokens import ControllerTokens
 
 
@@ -46,12 +46,12 @@ class Body(ConditionParent):
                 or self._ct.is_current_token_for_s(["if", "for", "while", "begin", "writeln", "readln"]):
             transition = Operator(self._ct)
         elif self._ct.is_current_token_for_s("end"):
-            # Программа завершена корректна
+            print("Программа написана корректна")
             self.__end = True
             return
 
         if transition is None:
-            print_error("ошибка в теле программы")
+            raise BodyError("ошибка в теле программы", self._ct.token_preview)
         else:
             transition.action()
 
@@ -68,7 +68,7 @@ class ID(ConditionParent):
                 if self._ct.is_token_id():
                     self._ct.reading_next_token()
                 else:
-                    print_error("не верно объявлен идентификатор")
+                    raise IDError("не верно объявлен идентификатор", self._ct.token_preview)
 
 
 class Operator(ConditionParent):
@@ -93,7 +93,7 @@ class Operator(ConditionParent):
             transition = Conclusion(self._ct)
 
         if transition is None:
-            print_error("не верно обработан оператор")
+            raise OperatorError("не верно обработан оператор", self._ct.token_preview)
         else:
             self._ct.reading_next_token()
             transition.action()
@@ -111,7 +111,7 @@ class Composite(ConditionParent):
         if self._ct.is_current_token_for_s("end"):
             self._ct.reading_next_token()
         else:
-            print_error("не верно обработан составной оператор")
+            raise CompositeError("не верно обработан составной оператор", self._ct.token_preview)
 
     def __checking(self) -> None:
         if self._ct.is_token_id() \
@@ -119,7 +119,7 @@ class Composite(ConditionParent):
             operator = Operator(self._ct)
             operator.action()
         else:
-            print_error("не верно обработан составной оператор")
+            raise CompositeError("не верно обработан составной оператор", self._ct.token_preview)
 
 
 class Assignments(ConditionParent):
@@ -132,7 +132,7 @@ class Assignments(ConditionParent):
             expression = Expression(self._ct)
             expression.action()
         else:
-            print_error("не верно обработано выражение")
+            raise AssignmentsError("не верно обработано выражение", self._ct.token_preview)
 
 
 class Expression(ConditionParent):
@@ -200,9 +200,9 @@ class Multiplier(ConditionParent):
             if self._ct.is_current_token_for_s(")"):
                 self._ct.reading_next_token()
             else:
-                print_error("не верно обработан множитель")
+                raise MultiplierError("не верно обработан множитель", self._ct.token_preview)
         else:
-            print_error("не верно обработан множитель")
+            raise MultiplierError("не верно обработан множитель", self._ct.token_preview)
 
 
 class Conditional(ConditionParent):
@@ -221,9 +221,9 @@ class Conditional(ConditionParent):
                     self._ct.reading_next_token()
                     self.__transition_operator()
             else:
-                print_error("не верно обработан условный оператор")
+                raise ConditionalError("не верно обработан условный оператор", self._ct.token_preview)
         else:
-            print_error("не верно обработан условный оператор")
+            raise ConditionalError("не верно обработан условный оператор", self._ct.token_preview)
 
     def __transition_operator(self) -> None:
         operator = Operator(self._ct)
@@ -250,11 +250,11 @@ class FixedCycle(ConditionParent):
                 if self._ct.is_current_token_for_s("next"):
                     self._ct.reading_next_token()
                 else:
-                    print_error("не верно обработан фиксированный цикл")
+                    raise FixedCycleError("не верно обработан фиксированный цикл", self._ct.token_preview)
             else:
-                print_error("не верно обработан фиксированный цикл")
+                raise FixedCycleError("не верно обработан фиксированный цикл", self._ct.token_preview)
         else:
-            print_error("не верно обработан фиксированный цикл")
+            raise FixedCycleError("не верно обработан фиксированный цикл", self._ct.token_preview)
 
     def __transition_expression(self) -> None:
         expression = Expression(self._ct)
@@ -273,9 +273,9 @@ class ConditionCycle(ConditionParent):
             if self._ct.is_current_token_for_s(")"):
                 self._ct.reading_next_token()
             else:
-                print_error("не верно обработан условный цикл")
+                raise ConditionCycleError("не верно обработан условный цикл", self._ct.token_preview)
         else:
-            print_error("не верно обработан условный цикл")
+            raise ConditionCycleError("не верно обработан условный цикл", self._ct.token_preview)
 
 
 class Entry(ConditionParent):
@@ -292,7 +292,7 @@ class Entry(ConditionParent):
         if self._ct.is_token_id():
             self._ct.reading_next_token()
         else:
-            print_error("не верно обработан оператор ввода")
+            raise EntryError("не верно обработан оператор ввода", self._ct.token_preview)
 
 
 class Conclusion(ConditionParent):
